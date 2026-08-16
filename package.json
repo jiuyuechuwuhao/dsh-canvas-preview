@@ -1,0 +1,44 @@
+{
+  "name": "dsh-canvas-preview",
+  "version": "0.1.0",
+  "description": "[WIP v0.1] Canvas preview panel for DeepSeek Harness — live-preview self-contained HTML artifacts in a dedicated conversation tab, with auto-sync, save-as, PNG/JPG export. DSH 画板预览插件：实时预览、另存为、高清导出。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "canvas",
+    "artifact",
+    "preview",
+    "diagram"
+  ],
+  "author": "jiuyuechuwuhao <591136253@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiuyuechuwuhao/dsh-canvas-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jiuyuechuwuhao/dsh-canvas-preview/issues"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://github.com/jiuyuechuwuhao/dsh-canvas-preview#readme"
+}

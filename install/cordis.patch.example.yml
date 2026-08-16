@@ -1,0 +1,5 @@
+# 追加到 $DSH_HOME/profiles/web/cordis.patch.yml 的启用行示例
+# Append to your web profile's cordis.patch.yml to enable the plugin:
+plugins:
+  - id: canvas-preview
+    name: dsh-canvas-preview
