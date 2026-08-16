@@ -1,7 +1,7 @@
 {
   "name": "dsh-canvas-preview",
-  "version": "0.1.0",
-  "description": "[WIP v0.1] Canvas preview panel for DeepSeek Harness — live-preview self-contained HTML artifacts in a dedicated conversation tab, with auto-sync, save-as, PNG/JPG export. DSH 画板预览插件：实时预览、另存为、高清导出。",
+  "version": "0.2.0",
+  "description": "[v0.2] Canvas preview panel for DeepSeek Harness — live-preview HTML artifacts, auto-sync, save-as, PNG/JPG/SVG export. DSH 画板预览插件：实时预览、另存为、PNG/JPG/SVG 导出。",
   "main": "lib/index.js",
   "exports": {
     ".": {

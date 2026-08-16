@@ -40,7 +40,7 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 | 🔄 **自动同步** | 每 4 秒扫描工作区，AI 一保存你立刻看到，**无需手动刷新** |
 | ↗️ **右上角通知卡** | AI 生成新产物瞬间弹出**实时渲染缩略图**，整卡可拖动、可展开、可调大小 |
 | 📂 **另存为** | 原生 macOS 目录选择器，默认 HTML 同目录，可改存「下载」或任何位置 |
-| 📥 **PNG/JPG 导出** | Chrome 无头引擎 **2 倍高清截图（3200×2400）· 约 2 秒出图**，点击结果直达 Finder |
+| 📥 **PNG/JPG/SVG 导出** | 位图：Chrome 无头 **2x 高清（3200×2400）· ~2s**；矢量：**SVG 直提**（瞬时 · 无限缩放）· 点击结果直达 Finder |
 | 🌓 **细节体验** | 宽度三档（适配/1280/手机竖屏）· 深色预览 · 导出耗时显示 |
 
 ## 🏗 架构 / Architecture
@@ -73,7 +73,8 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 - [x] PNG/JPG 导出（2x · ~2s · 抗字体墙 · 会话沙箱策略直传）
 - [x] 另存为（原生目录选择器）+ 导出后 Finder 定位
 - [ ] **v0.2 · 静态包**：`dsh plugin add` 一键安装
-- [ ] SVG 导出 · 自定义导出尺寸
+- [x] **SVG 矢量导出**（直接提取 `<svg>` 块，瞬时完成，无限缩放不失真）
+- [ ] 自定义导出尺寸
 - [ ] 英文文档与演示 GIF
 
 ## 🤝 参与贡献 / Contributing

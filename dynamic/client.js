@@ -291,6 +291,7 @@
           h('span', { className: 'cv-grp-label', style: { marginLeft: '8px' } }, '导出'),
           h('button', { type: 'button', className: 'cv-btn', disabled: state.exporting || state.picked === null, onClick: function () { onExport('png') } }, 'PNG'),
           h('button', { type: 'button', className: 'cv-btn', disabled: state.exporting || state.picked === null, onClick: function () { onExport('jpg') } }, 'JPG'),
+          h('button', { type: 'button', className: 'cv-btn', disabled: state.exporting || state.picked === null, onClick: function () { onExport('svg') } }, 'SVG'),
           h('button', { type: 'button', className: 'cv-btn', disabled: state.exporting || state.picking || state.picked === null, onClick: onExportAs }, '另存…'),
           msgNode),
         h('div', { className: state.theme === 'dark' ? 'cv-stage cv-stage-dark' : 'cv-stage cv-stage-light' }, bodyNode)))

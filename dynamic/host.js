@@ -183,10 +183,34 @@ return {
       }
     }
 
+    // SVG 导出：读 HTML 源，提取首个 <svg>…</svg> 块（含 xmlns 补全），直接写文件
+    const exportSvg = async (srcAbs, outAbs) => {
+      try {
+        const srcTarget = await fs.resolve(srcAbs)
+        const html = await fs.readText(srcTarget)
+        const start = html.search(/<svg[\s>]/i)
+        if (start === -1) return { ok: false, error: 'HTML 中未找到 <svg> 元素' }
+        const end = html.toLowerCase().lastIndexOf('</svg>')
+        if (end === -1 || end <= start) return { ok: false, error: 'SVG 块不完整' }
+        let svg = html.slice(start, end + 6)
+        if (svg.indexOf('xmlns=') === -1) {
+          svg = svg.replace(/<svg/i, '<svg xmlns="http://www.w3.org/2000/svg"')
+        }
+        if (svg.indexOf('<?xml') !== 0) {
+          svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg
+        }
+        const outTarget = await fs.resolve(outAbs)
+        await fs.writeText(outTarget, svg)
+        return { ok: true }
+      } catch (e) {
+        return { ok: false, error: String(e !== null && e !== undefined && e.message !== undefined ? e.message : e) }
+      }
+    }
+
     const d3 = harness.handle('canvas/export', async (args) => {
       const a = args !== null && typeof args === 'object' ? args : {}
       const path = typeof a.path === 'string' ? a.path : ''
-      const format = a.format === 'jpg' ? 'jpg' : 'png'
+      const format = a.format === 'jpg' ? 'jpg' : (a.format === 'svg' ? 'svg' : 'png')
       const dirArg = typeof a.dir === 'string' && a.dir !== '' ? a.dir : ''
       let w = typeof a.w === 'number' && isFinite(a.w) ? Math.round(a.w) : 1600
       let hgt = typeof a.h === 'number' && isFinite(a.h) ? Math.round(a.h) : 1200
@@ -209,6 +233,18 @@ return {
           outAbs = srcAbs.replace(/\.html?$/i, '') + '-canvas.' + format
         }
         const outName = outAbs.split('/').pop() || ('export.' + format)
+
+        // SVG 走独立路径：纯文本提取，不需要 Chrome
+        if (format === 'svg') {
+          const rs = await exportSvg(srcAbs, outAbs)
+          if (rs.ok) {
+            const secs = ((Date.now() - t0) / 1000).toFixed(1)
+            console.log('canvas/export svg ok in ' + secs + 's: ' + outName)
+            return { ok: true, out: outName, outPath: outAbs, ms: secs }
+          }
+          return { error: 'SVG: ' + rs.error }
+        }
+
         const script = [
           'set -eu',
           'CHROME=""',
