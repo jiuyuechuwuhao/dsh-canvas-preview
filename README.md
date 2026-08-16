@@ -8,7 +8,7 @@
 live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in one click.*
 
 [![Platform: DeepSeek Harness](https://img.shields.io/badge/Platform-DeepSeek%20Harness-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-0.4.1-4D6BFE?style=flat-square)](../../releases)
+[![Version](https://img.shields.io/badge/version-0.4.2-4D6BFE?style=flat-square)](https://www.npmjs.com/package/dsh-canvas-preview)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2d3142.svg?style=flat-square)](./LICENSE)
 [![Author](https://img.shields.io/badge/author-jiuyuechuwuhao-eb6c36?style=flat-square)](https://github.com/jiuyuechuwuhao)
 
@@ -53,7 +53,15 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 
 ## 🚀 安装 / Install
 
-**静态包（推荐，v0.4.1+）**：客户端必须通过 `window.__ModuleLoader__.load` 注册，裸 ESM 会让 Harness 启动失败。
+别人装只需要一条命令（会自动装包、写入 profile、尝试重启 Harness）：
+
+```bash
+npx dsh-canvas-preview
+```
+
+然后打开 http://127.0.0.1:3080/ ，会话顶栏出现「画板」即可。
+
+> 为什么不能在 Harness 里点一下就装？当前 DSH **没有社区一键商店**：设置里的插件清单是只读的，`dsh plugin add` 也只等于在 profile 里 `pnpm add`，还不会帮你启用。多出来的步骤是平台限制，不是本插件额外要求。这条 `npx` 把「装包 + 启用」包在一起了。
 
 本地开发（`file:` 链接，改源码即生效）：
 
@@ -62,21 +70,7 @@ dsh plugin --profile web add \
   "dsh-canvas-preview@file:/绝对路径/dsh-canvas-preview"
 ```
 
-发布到 npm 之后：
-
-```bash
-dsh plugin --profile web add dsh-canvas-preview
-```
-
-然后在 `~/.dsh/profiles/web/cordis.patch.yml` 启用（完整示例见 `install/cordis.patch.example.yml`）：
-
-```yaml
-- insert:
-    - id: canvas-preview
-      name: dsh-canvas-preview
-```
-
-重启 DeepSeek Harness，会话顶栏应出现「画板」。
+然后在 `~/.dsh/profiles/web/cordis.patch.yml` 启用（示例见 `install/cordis.patch.example.yml`）。
 
 **动态插件方式（创造模式，不写 profile）**：
 

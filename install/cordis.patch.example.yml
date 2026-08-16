@@ -1,5 +1,5 @@
-# 追加到 ~/.dsh/profiles/web/cordis.patch.yml
-# 必须先 dsh plugin --profile web add dsh-canvas-preview（或 file: 本地路径）
+# 一般不用手改：npx dsh-canvas-preview 会自动写入。
+# 仅在需要手工启用时追加到 ~/.dsh/profiles/web/cordis.patch.yml
 - insert:
     - id: canvas-preview
       name: dsh-canvas-preview
