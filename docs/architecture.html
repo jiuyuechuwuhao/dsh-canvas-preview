@@ -3,205 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>dsh-canvas-preview · 架构图</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>dsh-canvas-preview · Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --color-paper:   #f5f5f5;
-      --color-ink:     #2d3142;
-      --color-muted:   #4f5d75;
-      --color-accent:  #eb6c36;
-      --font-sans:     'Geist', 'PingFang SC', system-ui, sans-serif;
-      --font-serif:    'Instrument Serif', 'Songti SC', serif;
-      --font-mono:     'Geist Mono', ui-monospace, monospace;
+      --color-paper: #f5f5f5; --color-ink: #2d3142;
+      --color-muted: #4f5d75; --color-accent: #eb6c36;
     }
     body {
-      font-family: var(--font-sans);
-      background: var(--color-paper);
-      color: var(--color-ink);
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 2.5rem 2rem;
+      font-family: 'Geist', 'PingFang SC', system-ui, sans-serif;
+      background: var(--color-paper); color: var(--color-ink);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 2.5rem 1.5rem;
     }
-    .frame { max-width: 1280px; width: 100%; }
+    .frame { max-width: 860px; width: 100%; }
     .eyebrow {
-      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500;
+      font-family: 'Geist Mono', monospace; font-size: 0.64rem; font-weight: 500;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--color-muted); margin-bottom: 0.5rem;
+      color: var(--color-muted); margin-bottom: 0.45rem;
     }
     h1 {
-      font-size: clamp(1.7rem, 2.6vw + 0.85rem, 2.3rem);
-      letter-spacing: -0.02em; line-height: 1.15;
-      color: var(--color-ink); margin-bottom: 0.45rem;
-      display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+      font-size: 1.55rem; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
     }
     .plugin-name {
-      font-family: 'Geist Mono', ui-monospace, monospace;
-      font-weight: 600; color: var(--color-accent);
+      font-family: 'Geist Mono', monospace; font-weight: 600;
+      color: var(--color-accent); font-size: 0.94em;
     }
     .type-chip {
-      font-family: 'Geist Mono', ui-monospace, monospace;
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
-      text-transform: uppercase; color: #2e5aa8;
-      border: 1.5px solid #2e5aa8; border-radius: 999px;
-      padding: 0.28rem 0.85rem; line-height: 1;
-      background: rgba(46,90,168,0.06);
+      font-family: 'Geist Mono', monospace; font-size: 0.6rem; font-weight: 500;
+      letter-spacing: 0.13em; text-transform: uppercase; color: #2e5aa8;
+      border: 1.2px solid #2e5aa8; border-radius: 999px;
+      padding: 0.2rem 0.62rem; line-height: 1; background: rgba(46,90,168,0.06);
     }
-    .sub { font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-muted); margin-bottom: 1.2rem; }
-    svg { width: 100%; min-width: 1000px; display: block; }
+    .sub { font-size: 0.78rem; color: var(--color-muted); margin-bottom: 1.1rem; }
+    svg { width: 100%; display: block; }
   </style>
 </head>
 <body>
   <div class="frame">
     <p class="eyebrow">Architecture</p>
     <h1><span class="plugin-name">dsh-canvas-preview</span><span class="type-chip">Cordis Plugin</span></h1>
-    <p class="sub">浏览器画板与 Node 导出引擎通过包私有 RPC 协作；Chrome 无头截图采用「轮询杀进程」抗字体墙</p>
+    <p class="sub">浏览器画板 ⇄ Node 导出引擎 · 包私有 RPC 协作 · 轮询杀进程抗字体墙</p>
 
-    <svg viewBox="0 0 1280 900" width="1280" height="900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arch3-title arch3-desc">
-      <title id="arch3-title">dsh-canvas-preview Cordis Plugin 架构</title>
-      <desc id="arch3-desc">架构图：用户在浏览器侧使用画板页签、产物通知卡与目录选择器，通过包私有 RPC 调用 Node 宿主的四个处理器，驱动工作区扫描与 Chrome 无头导出引擎，产出 PNG、JPG、SVG 文件。</desc>
+    <svg viewBox="0 0 780 520" width="780" height="520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="a6t a6d">
+      <title id="a6t">dsh-canvas-preview Cordis Plugin 架构</title>
+      <desc id="a6d">浏览器侧画板页签与通知卡通过 host.call 调用 Node 侧四个 RPC 处理器，驱动工作区扫描与 Chrome 无头导出，产出 PNG JPG SVG。</desc>
       <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
-        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+        <marker id="ar" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+        <marker id="arc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
       </defs>
-
       <rect width="100%" height="100%" fill="#f5f5f5"/>
 
-      <!-- Zone: CLIENT -->
-      <rect x="60" y="80" width="440" height="740" rx="12"
-            fill="rgba(46,90,168,0.04)" stroke="rgba(46,90,168,0.28)" stroke-width="1.5"/>
-      <rect x="212" y="70" width="136" height="20" rx="4" fill="#f5f5f5"/>
-      <text x="280" y="85" fill="#2e5aa8" font-size="15" font-weight="600" font-family="'Geist Mono', monospace"
-            text-anchor="middle" letter-spacing="0.14em">CLIENT · 浏览器</text>
-
-      <!-- Zone: HOST -->
-      <rect x="780" y="80" width="440" height="740" rx="12"
-            fill="rgba(235,108,54,0.03)" stroke="rgba(235,108,54,0.30)" stroke-width="1.5"/>
-      <rect x="928" y="70" width="144" height="20" rx="4" fill="#f5f5f5"/>
-      <text x="1000" y="85" fill="#eb6c36" font-size="15" font-weight="600" font-family="'Geist Mono', monospace"
-            text-anchor="middle" letter-spacing="0.14em">HOST · NODE.JS</text>
+      <!-- Zones -->
+      <rect x="24" y="36" width="240" height="448" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <rect x="540" y="36" width="216" height="448" rx="8" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <rect x="146" y="30" width="96" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="194" y="39" fill="rgba(45,49,66,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">CLIENT · 浏览器</text>
+      <rect x="610" y="30" width="76" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="648" y="39" fill="rgba(45,49,66,0.40)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">HOST · NODE</text>
 
       <!-- 连线 -->
-      <line x1="280" y1="200" x2="312" y2="200" stroke="#4f5d75" stroke-width="2" marker-end="url(#arrow)"/>
-      <path d="M 500,190 H 688 Q 700,190 700,202 V 250" fill="none" stroke="#4f5d75" stroke-width="2" marker-end="url(#arrow)"/>
-      <path d="M 500,390 H 672 Q 684,390 684,378 V 330" fill="none" stroke="#4f5d75" stroke-width="2" marker-end="url(#arrow)"/>
-      <path d="M 500,610 H 656 Q 668,610 668,598 V 404" fill="none" stroke="#4f5d75" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
-      <path d="M 920,410 V 500" fill="none" stroke="#4f5d75" stroke-width="2" marker-end="url(#arrow)"/>
-      <path d="M 1080,410 V 500" fill="none" stroke="#eb6c36" stroke-width="2.2" marker-end="url(#arrow-accent)"/>
-      <line x1="1212" y1="580" x2="1168" y2="580" stroke="#4f5d75" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
-      <path d="M 900,730 H 620" fill="none" stroke="#eb6c36" stroke-width="2.2" marker-end="url(#arrow-accent)"/>
+      <line x1="144" y1="128" x2="144" y2="158" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#ar)"/>
+      <path d="M 238,196 H 268 Q 276,196 276,188 V 148 Q 276,140 284,140 H 296" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#ar)"/>
+      <path d="M 238,296 H 258 Q 266,296 266,288 V 172 Q 266,164 274,164 H 296" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#ar)"/>
+      <path d="M 238,396 H 250 Q 258,396 258,388 V 196 Q 258,188 266,188 H 296" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+      <path d="M 500,148 H 524 Q 532,148 532,156 V 186 H 552" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#ar)"/>
+      <path d="M 500,178 H 516 Q 524,178 524,186 V 302 H 552" fill="none" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arc)"/>
+      <path d="M 640,388 V 404 Q 640,412 632,412 H 504" fill="none" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arc)"/>
 
       <!-- 连线标签 -->
-      <rect x="238" y="172" width="44" height="20" rx="3" fill="#f5f5f5"/>
-      <text x="260" y="187" fill="#7a8399" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">使用</text>
+      <rect x="398" y="126" width="60" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="428" y="135" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">host.call</text>
+      <rect x="386" y="234" width="86" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="429" y="243" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.04em">导出 PNG·JPG·SVG</text>
+      <rect x="506" y="236" width="36" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="524" y="245" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">扫描</text>
 
-      <rect x="516" y="162" width="90" height="20" rx="3" fill="#f5f5f5"/>
-      <text x="561" y="177" fill="#7a8399" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">host.call</text>
+      <!-- CLIENT 节点 -->
+      <rect x="50" y="64" width="188" height="64" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+      <rect x="60" y="72" width="30" height="12" rx="2" fill="transparent" stroke="rgba(122,131,153,0.4)" stroke-width="0.8"/>
+      <text x="75" y="81" fill="#7a8399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">USER</text>
+      <text x="144" y="102" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">用户</text>
+      <text x="144" y="118" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">DSH Web UI</text>
 
-      <rect x="512" y="398" width="80" height="20" rx="3" fill="#f5f5f5"/>
-      <text x="552" y="413" fill="#7a8399" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">pickDir</text>
+      <rect x="50" y="164" width="188" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="60" y="172" width="32" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.4)" stroke-width="0.8"/>
+      <text x="76" y="181" fill="rgba(45,49,66,0.8)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">VIEW</text>
+      <text x="144" y="202" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">画板页签</text>
+      <text x="144" y="218" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">preview · save-as</text>
 
-      <rect x="580" y="700" width="160" height="20" rx="3" fill="#f5f5f5"/>
-      <text x="660" y="715" fill="#eb6c36" font-size="13" font-weight="500" font-family="'Geist Mono', monospace" text-anchor="middle">导出 PNG · JPG · SVG</text>
+      <rect x="50" y="264" width="188" height="64" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="60" y="272" width="34" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.4)" stroke-width="0.8"/>
+      <text x="77" y="281" fill="rgba(45,49,66,0.8)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CARD</text>
+      <text x="144" y="302" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">产物通知卡</text>
+      <text x="144" y="318" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">shell.overlay</text>
 
-      <rect x="934" y="440" width="52" height="20" rx="3" fill="#f5f5f5"/>
-      <text x="960" y="455" fill="#7a8399" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">扫描</text>
+      <rect x="50" y="364" width="188" height="64" rx="6" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="4,3"/>
+      <rect x="60" y="372" width="24" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.3)" stroke-width="0.8"/>
+      <text x="72" y="381" fill="rgba(45,49,66,0.6)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OS</text>
+      <text x="144" y="402" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">目录选择器</text>
+      <text x="144" y="418" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">native save-as</text>
 
-      <!-- 用户 -->
-      <rect x="110" y="150" width="170" height="100" rx="10" fill="#f5f5f5"/>
-      <rect x="110" y="150" width="170" height="100" rx="10" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1.6"/>
-      <rect x="122" y="162" width="52" height="20" rx="4" fill="transparent" stroke="rgba(122,131,153,0.5)" stroke-width="1.2"/>
-      <text x="148" y="177" fill="#7a8399" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">USER</text>
-      <text x="195" y="210" fill="#2d3142" font-size="20" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">用户</text>
-      <text x="195" y="234" fill="#4f5d75" font-size="14" font-family="'Geist Mono', monospace" text-anchor="middle">DSH Web UI</text>
+      <!-- 中列：RPC 焦点 -->
+      <rect x="296" y="56" width="204" height="180" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.2"/>
+      <rect x="306" y="66" width="30" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.5)" stroke-width="0.8"/>
+      <text x="321" y="75" fill="#eb6c36" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RPC</text>
+      <text x="398" y="104" fill="#2d3142" font-size="13" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">harness.handle × 4</text>
+      <text x="398" y="124" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">list · read · export · reveal</text>
+      <text x="398" y="148" fill="rgba(45,49,66,0.5)" font-size="9" font-family="'Geist', sans-serif" text-anchor="middle" font-style="italic">沙箱策略直传 · 双路径</text>
+      <text x="398" y="176" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">NEVER HANGS</text>
 
-      <!-- 画板页签 -->
-      <rect x="312" y="120" width="188" height="140" rx="10" fill="#f5f5f5"/>
-      <rect x="312" y="120" width="188" height="140" rx="10" fill="#ffffff" stroke="#2d3142" stroke-width="1.6"/>
-      <rect x="324" y="132" width="52" height="20" rx="4" fill="transparent" stroke="rgba(45,49,66,0.45)" stroke-width="1.2"/>
-      <text x="350" y="147" fill="rgba(45,49,66,0.8)" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">VIEW</text>
-      <text x="406" y="180" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">画板页签</text>
-      <text x="406" y="204" fill="#4f5d75" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">conversation.view</text>
-      <text x="406" y="226" fill="#4f5d75" font-size="13" font-family="'Geist', sans-serif" text-anchor="middle">预览 · 宽度 · 深色 · 另存</text>
+      <!-- 中列：产物 -->
+      <rect x="296" y="380" width="208" height="56" rx="6" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <rect x="306" y="388" width="30" height="12" rx="2" fill="transparent" stroke="rgba(79,93,117,0.5)" stroke-width="0.8"/>
+      <text x="321" y="397" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OUT</text>
+      <text x="400" y="416" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PNG · JPG · SVG</text>
 
-      <!-- 产物通知卡 -->
-      <rect x="312" y="320" width="188" height="140" rx="10" fill="#f5f5f5"/>
-      <rect x="312" y="320" width="188" height="140" rx="10" fill="#ffffff" stroke="#2d3142" stroke-width="1.6"/>
-      <rect x="324" y="332" width="52" height="20" rx="4" fill="transparent" stroke="rgba(45,49,66,0.45)" stroke-width="1.2"/>
-      <text x="350" y="347" fill="rgba(45,49,66,0.8)" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CARD</text>
-      <text x="406" y="380" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">产物通知卡</text>
-      <text x="406" y="404" fill="#4f5d75" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">shell.overlay</text>
-      <text x="406" y="426" fill="#4f5d75" font-size="13" font-family="'Geist', sans-serif" text-anchor="middle">缩略图 · 拖动 · 定位</text>
+      <!-- HOST 节点 -->
+      <rect x="552" y="164" width="188" height="76" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="562" y="172" width="24" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.4)" stroke-width="0.8"/>
+      <text x="574" y="181" fill="rgba(45,49,66,0.8)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">FS</text>
+      <text x="646" y="202" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">工作区扫描</text>
+      <text x="646" y="218" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">fs · 4s 轮询</text>
 
-      <!-- 目录选择器 -->
-      <rect x="312" y="540" width="188" height="140" rx="10" fill="#f5f5f5"/>
-      <rect x="312" y="540" width="188" height="140" rx="10" fill="rgba(45,49,66,0.02)" stroke="rgba(45,49,66,0.3)" stroke-width="1.6" stroke-dasharray="7,5"/>
-      <rect x="324" y="552" width="44" height="20" rx="4" fill="transparent" stroke="rgba(45,49,66,0.35)" stroke-width="1.2"/>
-      <text x="346" y="567" fill="rgba(45,49,66,0.6)" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OS</text>
-      <text x="406" y="600" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">目录选择器</text>
-      <text x="406" y="624" fill="#4f5d75" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle">native save-as</text>
-      <text x="406" y="646" fill="#4f5d75" font-size="13" font-family="'Geist', sans-serif" text-anchor="middle">另存为 · 更改位置</text>
-
-      <!-- 产物节点 -->
-      <rect x="540" y="690" width="220" height="80" rx="10" fill="#f5f5f5"/>
-      <rect x="540" y="690" width="220" height="80" rx="10" fill="rgba(235,108,54,0.07)" stroke="#eb6c36" stroke-width="1.6"/>
-      <rect x="552" y="700" width="48" height="20" rx="4" fill="transparent" stroke="rgba(235,108,54,0.5)" stroke-width="1.2"/>
-      <text x="576" y="715" fill="#eb6c36" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OUT</text>
-      <text x="650" y="741" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PNG · JPG · SVG</text>
-
-      <!-- RPC 处理器 -->
-      <rect x="800" y="120" width="400" height="290" rx="10" fill="#f5f5f5"/>
-      <rect x="800" y="120" width="400" height="290" rx="10" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.8"/>
-      <rect x="814" y="134" width="60" height="22" rx="4" fill="transparent" stroke="rgba(235,108,54,0.55)" stroke-width="1.2"/>
-      <text x="844" y="150" fill="#eb6c36" font-size="13" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RPC</text>
-      <text x="1000" y="190" fill="#2d3142" font-size="21" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">harness.handle × 4</text>
-      <text x="1000" y="226" fill="#4f5d75" font-size="15" font-family="'Geist Mono', monospace" text-anchor="middle">canvas/list · canvas/read</text>
-      <text x="1000" y="254" fill="#4f5d75" font-size="15" font-family="'Geist Mono', monospace" text-anchor="middle">canvas/export · canvas/reveal</text>
-      <text x="1000" y="290" fill="rgba(45,49,66,0.6)" font-size="14" font-family="'Geist', sans-serif" text-anchor="middle">会话沙箱策略直传</text>
-      <text x="1000" y="316" fill="rgba(45,49,66,0.6)" font-family="'Geist', sans-serif" font-size="14" text-anchor="middle">shell + subprocess 双执行路径</text>
-      <text x="1000" y="362" fill="#eb6c36" font-size="14" font-weight="500" font-family="'Geist Mono', monospace" text-anchor="middle">每步硬超时 · 永不挂起</text>
-
-      <!-- 工作区扫描 -->
-      <rect x="800" y="500" width="240" height="160" rx="10" fill="#f5f5f5"/>
-      <rect x="800" y="500" width="240" height="160" rx="10" fill="#ffffff" stroke="#2d3142" stroke-width="1.6"/>
-      <rect x="812" y="512" width="44" height="20" rx="4" fill="transparent" stroke="rgba(45,49,66,0.45)" stroke-width="1.2"/>
-      <text x="834" y="527" fill="rgba(45,49,66,0.8)" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">FS</text>
-      <text x="920" y="562" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">工作区扫描</text>
-      <text x="920" y="590" fill="#4f5d75" font-size="14" font-family="'Geist Mono', monospace" text-anchor="middle">fs + sessionQuery</text>
-      <text x="920" y="614" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="14" text-anchor="middle">4 秒签名轮询 · 自动同步</text>
-
-      <!-- 导出引擎 -->
-      <rect x="960" y="500" width="260" height="230" rx="10" fill="#f5f5f5"/>
-      <rect x="960" y="500" width="260" height="230" rx="10" fill="#ffffff" stroke="#2d3142" stroke-width="1.6"/>
-      <rect x="972" y="512" width="56" height="20" rx="4" fill="transparent" stroke="rgba(45,49,66,0.45)" stroke-width="1.2"/>
-      <text x="1000" y="527" fill="rgba(45,49,66,0.8)" font-size="12" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SHOT</text>
-      <text x="1090" y="562" fill="#2d3142" font-size="19" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Chrome 无头截图</text>
-      <text x="1090" y="590" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="14" text-anchor="middle">后台启动 · 轮询杀进程</text>
-      <text x="1090" y="614" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="14" text-anchor="middle">cp→PNG · sips→JPG85</text>
-      <text x="1090" y="638" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="14" text-anchor="middle">2x 高清 · ~2 秒</text>
-      <text x="1090" y="668" fill="#eb6c36" font-family="'Geist', sans-serif" font-size="14" font-weight="500" text-anchor="middle">SVG 直提 · 无需 Chrome</text>
-      <text x="1090" y="692" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="13" text-anchor="middle">&lt;svg&gt; extract</text>
-
-      <!-- 数据源注释 -->
-      <text x="1216" y="574" fill="rgba(45,49,66,0.55)" font-size="14" font-family="'Geist Mono', monospace" text-anchor="end">工作区</text>
-      <text x="1216" y="596" fill="rgba(45,49,66,0.55)" font-size="14" font-family="'Geist Mono', monospace" text-anchor="end">*.html</text>
+      <rect x="552" y="280" width="188" height="108" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="562" y="288" width="38" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.4)" stroke-width="0.8"/>
+      <text x="581" y="297" fill="rgba(45,49,66,0.8)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">SHOT</text>
+      <text x="646" y="318" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Chrome 无头截图</text>
+      <text x="646" y="336" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif" text-anchor="middle">轮询杀 · 2x · ~2s</text>
+      <text x="646" y="354" fill="#4f5d75" font-size="9" font-family="'Geist', sans-serif" text-anchor="middle">PNG · JPG 位图</text>
+      <text x="646" y="372" fill="#eb6c36" font-size="9" font-weight="500" font-family="'Geist', sans-serif" text-anchor="middle">SVG 矢量直提</text>
 
       <!-- 图例 -->
-      <line x1="60" y1="844" x2="1220" y2="844" stroke="rgba(45,49,66,0.14)" stroke-width="1.2"/>
-      <text x="60" y="872" fill="#4f5d75" font-size="13" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
-      <rect x="160" y="858" width="22" height="16" rx="4" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1.4"/>
-      <text x="192" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">RPC 核心</text>
-      <rect x="296" y="858" width="22" height="16" rx="4" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
-      <text x="328" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">插件组件</text>
-      <rect x="432" y="858" width="22" height="16" rx="4" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1.4"/>
-      <text x="464" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">产物 / 数据</text>
-      <line x1="584" y1="866" x2="620" y2="866" stroke="#eb6c36" stroke-width="2.2" marker-end="url(#arrow-accent)"/>
-      <text x="630" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">导出主流程</text>
-      <line x1="740" y1="866" x2="776" y2="866" stroke="#4f5d75" stroke-width="2" marker-end="url(#arrow)"/>
-      <text x="786" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">调用 / 挂载</text>
-      <line x1="896" y1="866" x2="932" y2="866" stroke="#4f5d75" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
-      <text x="942" y="871" fill="#4f5d75" font-size="14" font-family="'Geist', sans-serif">系统服务</text>
+      <line x1="24" y1="500" x2="756" y2="500" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <text x="24" y="516" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+      <rect x="82" y="507" width="12" height="9" rx="2" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <text x="99" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">RPC 核心</text>
+      <rect x="158" y="507" width="12" height="9" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="175" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">组件</text>
+      <rect x="212" y="507" width="12" height="9" rx="2" fill="rgba(45,49,66,0.05)" stroke="#4f5d75" stroke-width="1"/>
+      <text x="229" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">产物</text>
+      <line x1="266" y1="511" x2="290" y2="511" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arc)"/>
+      <text x="296" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">导出流程</text>
+      <line x1="350" y1="511" x2="374" y2="511" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#ar)"/>
+      <text x="380" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">调用</text>
+      <line x1="416" y1="511" x2="440" y2="511" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+      <text x="446" y="515" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">系统服务</text>
     </svg>
   </div>
 </body>
