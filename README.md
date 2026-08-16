@@ -8,7 +8,7 @@
 live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in one click.*
 
 [![Platform: DeepSeek Harness](https://img.shields.io/badge/Platform-DeepSeek%20Harness-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-0.1.0--WIP-orange?style=flat-square)](../../releases)
+[![Version](https://img.shields.io/badge/version-0.4.1-4D6BFE?style=flat-square)](../../releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2d3142.svg?style=flat-square)](./LICENSE)
 [![Author](https://img.shields.io/badge/author-jiuyuechuwuhao-eb6c36?style=flat-square)](https://github.com/jiuyuechuwuhao)
 
@@ -53,12 +53,34 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 
 ## 🚀 安装 / Install
 
-> **当前 v0.1.0-WIP 以动态插件形态发布**（`dynamic/` 目录，源码即文档，DSH 创造模式即用）。
-> `dsh plugin add` 一键安装的静态包在 Roadmap 的 v0.2。
+**静态包（推荐，v0.4.1+）**：客户端必须通过 `window.__ModuleLoader__.load` 注册，裸 ESM 会让 Harness 启动失败。
 
-**动态插件方式（现在就能用）**：
+本地开发（`file:` 链接，改源码即生效）：
 
-1. 克隆本仓库到任意位置（建议放 DSH 工作区）
+```bash
+dsh plugin --profile web add \
+  "dsh-canvas-preview@file:/绝对路径/dsh-canvas-preview"
+```
+
+发布到 npm 之后：
+
+```bash
+dsh plugin --profile web add dsh-canvas-preview
+```
+
+然后在 `~/.dsh/profiles/web/cordis.patch.yml` 启用（完整示例见 `install/cordis.patch.example.yml`）：
+
+```yaml
+- insert:
+    - id: canvas-preview
+      name: dsh-canvas-preview
+```
+
+重启 DeepSeek Harness，会话顶栏应出现「画板」。
+
+**动态插件方式（创造模式，不写 profile）**：
+
+1. 克隆本仓库到任意位置
 2. 在 DSH 会话中对 Agent 说：
    > 按 `dsh-canvas-preview/dynamic/` 的 host.js + client.js 定义并运行画板插件
 3. 批准一次插件运行 —— 画板页签即出现在会话顶部
@@ -72,7 +94,7 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 - [x] 右上角产物通知卡（实时缩略图 + 整卡拖动 + 可调大小）
 - [x] PNG/JPG 导出（2x · ~2s · 抗字体墙 · 会话沙箱策略直传）
 - [x] 另存为（原生目录选择器）+ 导出后 Finder 定位
-- [ ] **v0.2 · 静态包**：`dsh plugin add` 一键安装
+- [x] **v0.4 · 静态包**：`dsh plugin add` + `__ModuleLoader__` 客户端包装
 - [x] **SVG 矢量导出**（直接提取 `<svg>` 块，瞬时完成，无限缩放不失真）
 - [ ] 自定义导出尺寸
 - [ ] 英文文档与演示 GIF
