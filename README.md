@@ -1,91 +1,91 @@
-# dsh-canvas-preview
+<div align="center">
 
-> **🚧 WIP v0.1.0 — 打磨中 / Work in Progress**
-> 当前版本以**动态 Cordis 插件**形式提供（见 `dynamic/` 目录，DSH 创造模式即用）。
-> `dsh plugin add` 一键安装的静态包正在开发中（见 Roadmap）。
-> 边用边改，欢迎 Fork / 提 Issue。
->
-> **Current release works as a DYNAMIC Cordis plugin** (see `dynamic/` — usable today in DSH's authoring preset). The one-line static install (`dsh plugin add`) is on the roadmap. Iterate-in-public; forks and issues welcome.
+# 🎨 dsh-canvas-preview
+
+**DeepSeek Harness 的画板预览插件 — AI 生成的网页产物，实时预览 · 一键高清导出**
+
+*Canvas preview panel for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) —
+live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in one click.*
+
+[![Platform: DeepSeek Harness](https://img.shields.io/badge/Platform-DeepSeek%20Harness-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
+[![Version](https://img.shields.io/badge/version-0.1.0--WIP-orange?style=flat-square)](../../releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2d3142.svg?style=flat-square)](./LICENSE)
+[![Author](https://img.shields.io/badge/author-jiuyuechuwuhao-eb6c36?style=flat-square)](https://github.com/jiuyuechuwuhao)
+
+</div>
 
 ---
 
-**DSH 画板预览插件** — A Canvas/Artifact preview panel for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web UI.
+> ## 🤔 什么是 DeepSeek Harness？
+>
+> **[DeepSeek Harness（DSH）](https://github.com/deepseek-ai/deepseek-harness)** 是 DeepSeek 开源的
+> **AI 智能体运行台**：浏览器里跑一个能读写文件、执行命令、调用工具的 AI 编程助手。
+> 它的每一项能力都是一个 **Cordis 插件** —— 本项目就是其中之一。
+>
+> *DeepSeek Harness (DSH) is DeepSeek's open-source agent harness: a browser-based AI coding
+> assistant whose every capability is a Cordis plugin. This project is one of them.*
 
-在会话视图里增加一个「画板」页签：自动列出工作区中的自包含 HTML 产物（图表、原型、幻灯片），沙箱实时预览、文件变化自动同步、宽度适配、深色模式、一键导出 PNG/JPG —— 对标 Gemini / Claude 的 Canvas 体验。
+---
 
-> Add a "Canvas" tab to the DSH conversation view: auto-list self-contained HTML artifacts in the workspace, live-preview them in a sandbox, auto-sync on file change, width presets, dark preview, and one-click PNG/JPG export.
+## ✨ 它解决什么问题 / What it solves
 
-## ✨ 功能 / Features
+用 DSH 做内容创作时，AI 经常生成**自包含 HTML 产物**——架构图、信息图、网页原型、幻灯片……
+但你只能去文件夹里双击打开，来回切换窗口。
 
-| 功能 | 说明 |
+**dsh-canvas-preview 把「Gemini / Claude 的 Canvas 画板体验」带进 DSH**：
+
+| | |
 |---|---|
-| 🖼 画板页签 | 与 聊天 / Trajectory 并排的第三个视图页签 |
-| 🔄 自动同步 | 每 4 秒扫描工作区，文件签名变化即自动刷新预览，无需手动刷新 |
-| ↔️ 宽度适配 | 适配 / 1280（桌面）/ 390（手机竖屏）三档 |
-| 🌓 深色预览 | 一键反色滤镜，浅色图表秒变深色底，无需重新生成 |
-| 📥 导出 PNG/JPG | Chrome 无头 2x 高清截图（3200×2400）· ~2秒出图 · 轮询杀进程（不受被墙字体影响）· JPG 质量 85 |
-| 📂 另存为 | 保存位置行（默认 HTML 同目录，可改）+ 「另存…」原生目录选择器 · 导出后点击链接 Finder 定位文件 |
-| 🔒 沙箱安全 | iframe `sandbox="allow-scripts"` 预览，无同源权限 |
-
-## 📦 安装 / Install
-
-**方式一：npm（推荐）**
-
-```sh
-dsh plugin --profile web add dsh-canvas-preview
-```
-
-**方式二：GitHub**
-
-```sh
-dsh plugin --profile web add github:YOUR_GITHUB_USERNAME/dsh-canvas-preview
-```
-
-然后在 `$DSH_HOME/profiles/web/cordis.patch.yml` 追加启用行：
-
-```yaml
-- id: canvas-preview
-  name: dsh-canvas-preview
-```
-
-重启 `dsh web` 生效。
-
-## 🚀 使用 / Usage
-
-1. 让 Agent 生成任意自包含 HTML（推荐搭配 [diagram-design](https://github.com/cathrynlavery/diagram-design) 技能画图）
-2. 切到会话顶部「画板」页签
-3. 左侧点选文件 → 右侧实时预览；文件更新自动刷新
-4. 工具栏切换宽度/主题，点 PNG / JPG 导出高清图
+| 🖼 **画板页签** | 与「聊天」并排的独立视图，左侧文件列表 + 右侧沙箱实时预览 |
+| 🔄 **自动同步** | 每 4 秒扫描工作区，AI 一保存你立刻看到，**无需手动刷新** |
+| ↗️ **右上角通知卡** | AI 生成新产物瞬间弹出**实时渲染缩略图**，整卡可拖动、可展开、可调大小 |
+| 📂 **另存为** | 原生 macOS 目录选择器，默认 HTML 同目录，可改存「下载」或任何位置 |
+| 📥 **PNG/JPG 导出** | Chrome 无头引擎 **2 倍高清截图（3200×2400）· 约 2 秒出图**，点击结果直达 Finder |
+| 🌓 **细节体验** | 宽度三档（适配/1280/手机竖屏）· 深色预览 · 导出耗时显示 |
 
 ## 🏗 架构 / Architecture
 
-双平面 Cordis 插件（two-plane Cordis plugin）：
+![双平面插件架构](./docs/architecture.png)
 
-```
-┌─ Host (Node.js) ─────────────┐   ┌─ Client (browser) ──────────┐
-│ fs 服务扫描工作区             │   │ conversation.view 插槽        │
-│ canvas/list  → 文件清单+签名   │◄──┤ host.call RPC               │
-│ canvas/read  → 文件内容       │◄──┤ 沙箱 iframe 预览             │
-│ canvas/export→ Chrome 无头截图 │◄──┤ 宽度/主题/导出控件           │
-└──────────────────────────────┘   └─────────────────────────────┘
-```
+双平面 Cordis 插件：**Client 半**（浏览器）注册画板页签与通知卡，通过包私有 RPC
+（`host.call ⇄ harness.handle`）调用 **Host 半**（Node.js）的文件扫描与导出引擎。
+导出采用「Chrome 后台启动 + 轮询截图文件 + 稳定即杀」策略——不受被墙字体影响，永不挂起。
+
+## 🚀 安装 / Install
+
+> **当前 v0.1.0-WIP 以动态插件形态发布**（`dynamic/` 目录，源码即文档，DSH 创造模式即用）。
+> `dsh plugin add` 一键安装的静态包在 Roadmap 的 v0.2。
+
+**动态插件方式（现在就能用）**：
+
+1. 克隆本仓库到任意位置（建议放 DSH 工作区）
+2. 在 DSH 会话中对 Agent 说：
+   > 按 `dsh-canvas-preview/dynamic/` 的 host.js + client.js 定义并运行画板插件
+3. 批准一次插件运行 —— 画板页签即出现在会话顶部
 
 ## 🗺 Roadmap
 
-- [x] 画板页签 + 文件列表 + 沙箱预览
+- [x] 画板页签 · 文件列表 · 沙箱预览
 - [x] 会话 cwd 智能定位扫描根
-- [x] 自动同步（签名轮询）
+- [x] 自动同步（签名轮询，不重置用户选中）
 - [x] 宽度适配 / 深色预览
-- [x] PNG/JPG 导出（2x）
-- [x] 右上角产物通知卡片（实时缩略图 + 展开为可拖动/可调大小的浮动窗口）
-- [ ] **v0.2 · 静态包**：`dsh plugin add` 一键安装（RPC 接缝改造）
-- [ ] SVG 导出
-- [ ] 自定义导出尺寸
+- [x] 右上角产物通知卡（实时缩略图 + 整卡拖动 + 可调大小）
+- [x] PNG/JPG 导出（2x · ~2s · 抗字体墙 · 会话沙箱策略直传）
+- [x] 另存为（原生目录选择器）+ 导出后 Finder 定位
+- [ ] **v0.2 · 静态包**：`dsh plugin add` 一键安装
+- [ ] SVG 导出 · 自定义导出尺寸
+- [ ] 英文文档与演示 GIF
+
+## 🤝 参与贡献 / Contributing
+
+欢迎 **Issue** 反馈 bug 与功能建议；欢迎 **Fork** 后自由修改（MIT 协议）。
+PR 会被认真审阅。开发备忘（沙箱策略、Chrome 挂死等硬核经验）见
+[`dynamic/README.md`](./dynamic/README.md)。
 
 ## 👤 作者 / Author
 
-**YOUR NAME** — [@YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
+**jiuyuechuwuhao** — [GitHub 主页](https://github.com/jiuyuechuwuhao)
 
 ## 📄 License
 
-[MIT](LICENSE)
+[MIT](./LICENSE) © 2026 jiuyuechuwuhao
