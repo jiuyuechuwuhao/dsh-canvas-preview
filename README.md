@@ -7,9 +7,10 @@
 *Canvas preview panel for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) —
 live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in one click.*
 
+[![npm](https://img.shields.io/npm/v/dsh-canvas-preview?style=flat-square&color=4D6BFE)](https://www.npmjs.com/package/dsh-canvas-preview)
 [![Platform: DeepSeek Harness](https://img.shields.io/badge/Platform-DeepSeek%20Harness-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Version](https://img.shields.io/badge/version-0.4.2-4D6BFE?style=flat-square)](https://www.npmjs.com/package/dsh-canvas-preview)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2d3142.svg?style=flat-square)](./LICENSE)
+[![topic: dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-eb6c36?style=flat-square)](https://github.com/topics/dsh-plugin)
 [![Author](https://img.shields.io/badge/author-jiuyuechuwuhao-eb6c36?style=flat-square)](https://github.com/jiuyuechuwuhao)
 
 </div>
@@ -47,8 +48,8 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 
 ![双平面插件架构](./docs/architecture.png)
 
-双平面 Cordis 插件：**Client 半**（浏览器）注册画板页签与通知卡，通过包私有 RPC
-（`host.call ⇄ harness.handle`）调用 **Host 半**（Node.js）的文件扫描与导出引擎。
+双平面 Cordis 插件：**Client 半**（浏览器）注册画板页签与通知卡，通过独立 RPC 频道
+`/canvas`（不占用官方 `/api` 拦截器）调用 **Host 半**（Node.js）的文件扫描与导出引擎。
 导出采用「Chrome 后台启动 + 轮询截图文件 + 稳定即杀」策略——不受被墙字体影响，永不挂起。
 
 ## 🚀 安装 / Install
@@ -60,6 +61,14 @@ npx dsh-canvas-preview
 ```
 
 然后打开 http://127.0.0.1:3080/ ，会话顶栏出现「画板」即可。
+
+等价官方装包命令：
+
+```bash
+dsh plugin --profile web add dsh-canvas-preview
+```
+
+（`npx` 安装器会再帮你写入 `cordis.patch.yml` 并尝试重启。）
 
 > 为什么不能在 Harness 里点一下就装？当前 DSH **没有社区一键商店**：设置里的插件清单是只读的，`dsh plugin add` 也只等于在 profile 里 `pnpm add`，还不会帮你启用。多出来的步骤是平台限制，不是本插件额外要求。这条 `npx` 把「装包 + 启用」包在一起了。
 
@@ -78,6 +87,21 @@ dsh plugin --profile web add \
 2. 在 DSH 会话中对 Agent 说：
    > 按 `dsh-canvas-preview/dynamic/` 的 host.js + client.js 定义并运行画板插件
 3. 批准一次插件运行 —— 画板页签即出现在会话顶部
+
+## 🔐 访问范围 / What it accesses
+
+| 访问 | 说明 |
+|---|---|
+| 工作区 HTML | 扫描会话 cwd 下的 `.html` / `.htm`，在沙箱 iframe 中预览 |
+| 本机 Chrome | PNG/JPG 导出时启动无头 Chrome 截图，写回工作区或指定目录 |
+| 网络 | **不**把产物发到第三方。被预览的 HTML 自己请求远程字体/图时除外 |
+| 凭据 | 不读取 API Key |
+
+## 🔎 在哪找到 / Discover
+
+- npm：https://www.npmjs.com/package/dsh-canvas-preview
+- GitHub topic：[`dsh-plugin`](https://github.com/topics/dsh-plugin)
+- 社区目录：https://deepseekharnessplugins.com/ （PR 合并后同步）
 
 ## 🗺 Roadmap
 
