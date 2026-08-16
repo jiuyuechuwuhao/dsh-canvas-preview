@@ -12,6 +12,7 @@ live-preview AI-generated HTML artifacts and export them as high-res PNG/JPG in 
 [![License: MIT](https://img.shields.io/badge/License-MIT-2d3142.svg?style=flat-square)](./LICENSE)
 [![topic: dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-eb6c36?style=flat-square)](https://github.com/topics/dsh-plugin)
 [![Author](https://img.shields.io/badge/author-jiuyuechuwuhao-eb6c36?style=flat-square)](https://github.com/jiuyuechuwuhao)
+[![GitHub Release](https://img.shields.io/github/v/release/jiuyuechuwuhao/dsh-canvas-preview?style=flat-square)](https://github.com/jiuyuechuwuhao/dsh-canvas-preview/releases)
 
 </div>
 

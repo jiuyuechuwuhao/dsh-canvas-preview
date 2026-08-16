@@ -1,0 +1,23 @@
+name: Bug
+description: 启动失败、插件列表读不了、预览或导出异常
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      placeholder: 复现步骤、期望、实际
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: 版本
+      placeholder: "dsh-canvas-preview 0.4.5 / DSH rc.x"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 控制台或 ~/.dsh 日志摘录

@@ -1,0 +1,12 @@
+name: 功能建议
+description: 新能力或体验改进
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: 建议
+      placeholder: 想解决什么问题、期望的交互
+    validations:
+      required: true

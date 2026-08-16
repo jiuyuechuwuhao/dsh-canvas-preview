@@ -1,0 +1,25 @@
+# Changelog
+
+## 0.4.5 — 2026-08-17
+
+- 仓库页与 npm 文档对齐：访问范围、SECURITY.md、发现入口
+- `package.json` 增加 `dsh-plugin` 关键词
+
+## 0.4.4 — 2026-08-17
+
+- Host 不再拦截官方 `/api`（会让设置里「插件列表」整页读失败）
+- 画板 RPC 改走独立频道 `/canvas`
+- 客户端补 `connection` inject，修复「另存」崩溃
+
+## 0.4.3 — 2026-08-17
+
+- Cordis `apply.inject` 改为服务名 `slots`，不再误等 npm 包名
+
+## 0.4.2 — 2026-08-17
+
+- 增加 `npx dsh-canvas-preview` 一键安装（装包 + 写入 patch + 尝试重启）
+
+## 0.4.1 — 2026-08-17
+
+- 客户端按 DSH 要求用 `window.__ModuleLoader__.load` 注册，避免 Harness 启动失败
+- 包声明 `"type": "module"`
