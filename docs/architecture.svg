@@ -1,51 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>dsh-canvas-preview · 架构图</title>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --color-paper:   #f5f5f5;
-      --color-ink:     #2d3142;
-      --color-muted:   #4f5d75;
-      --color-accent:  #eb6c36;
-      --font-sans:     'Geist', 'PingFang SC', system-ui, sans-serif;
-      --font-serif:    'Instrument Serif', 'Songti SC', serif;
-      --font-mono:     'Geist Mono', ui-monospace, monospace;
-    }
-    body {
-      font-family: var(--font-sans);
-      background: var(--color-paper);
-      color: var(--color-ink);
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 3rem 2rem;
-    }
-    .frame { max-width: 1240px; width: 100%; }
-    .eyebrow {
-      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--color-muted); margin-bottom: 0.5rem;
-    }
-    h1 {
-      font-family: var(--font-serif); font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
-      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
-      color: var(--color-ink); margin-bottom: 0.4rem;
-    }
-    .sub { font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-muted); margin-bottom: 1.4rem; }
-    svg { width: 100%; min-width: 960px; display: block; }
-  </style>
-</head>
-<body>
-  <div class="frame">
-    <p class="eyebrow">Architecture · DeepSeek Harness Plugin</p>
-    <h1>dsh-canvas-preview — 双平面插件架构</h1>
-    <p class="sub">浏览器画板与 Node 导出引擎通过包私有 RPC 协作；Chrome 无头截图采用「轮询杀进程」抗字体墙</p>
-
-    <svg viewBox="0 0 1080 640" width="1080" height="640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arch-title arch-desc">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1080 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="arch-title arch-desc">
       <title id="arch-title">dsh-canvas-preview 双平面架构</title>
       <desc id="arch-desc">架构图：左侧用户在浏览器使用画板页签与通知卡，中部 Client 平面的三个组件通过 host.call 调用 Host 平面的 RPC 处理器，后者驱动工作区扫描与 Chrome 无头导出引擎，最终产出 PNG/JPG 文件。</desc>
       <defs>
@@ -189,6 +143,3 @@
       <line x1="750" y1="545" x2="778" y2="545" stroke="#4f5d75" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
       <text x="786" y="548" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">系统服务</text>
     </svg>
-  </div>
-</body>
-</html>
