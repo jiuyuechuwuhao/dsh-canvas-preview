@@ -4,6 +4,7 @@
 
 - 补齐 `dsh.bundle` + 根目录 `cordis.patch.yml`，使 `dsh plugin add` 可安装
 - 发布包纳入 `cordis.patch.yml`
+- 客户端 `inject` 补上 `timer`（`ctx.interval` / `ctx.timeout` 依赖该服务）
 
 ## 0.4.5 — 2026-08-17
 

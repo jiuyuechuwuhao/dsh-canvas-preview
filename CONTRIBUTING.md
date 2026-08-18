@@ -21,7 +21,7 @@ dsh plugin --profile web add "dsh-canvas-preview@file:$PWD"
 ## 不要碰的边界
 
 - 不要对 `/api` 再注册 interceptor（官方网关独占）
-- 客户端必须用 `window.__ModuleLoader__.load`，`inject` 只能写 Cordis **服务名**（如 `slots`、`connection`）
+- 客户端必须用 `window.__ModuleLoader__.load`，`inject` 只能写 Cordis **服务名**（如 `timer`、`slots`、`connection`）
 
 ## 发版
 
