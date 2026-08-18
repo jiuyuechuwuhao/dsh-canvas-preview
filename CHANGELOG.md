@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.7 — 2026-08-18
+
+- 修复空态垮塌：`.cv-root` 增加 `min-height:380px` 兜底（父容器无高度时面板不再塌陷）
+- 空态体验：无 HTML 产物时舞台显示居中引导卡（生成 HTML artifact 后自动出现）；侧栏空态补充提示文案
+
 ## 0.4.6 — 2026-08-18
 
 - 补齐 `dsh.bundle` + 根目录 `cordis.patch.yml`，使 `dsh plugin add` 可安装

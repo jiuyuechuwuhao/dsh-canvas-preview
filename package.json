@@ -1,6 +1,6 @@
 {
   "name": "dsh-canvas-preview",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "Canvas preview panel for DeepSeek Harness — live-preview HTML artifacts, auto-sync, save-as, PNG/JPG/SVG export. DSH 画板预览插件：实时预览、另存为、PNG/JPG/SVG 导出。",
   "type": "module",
   "main": "lib/index.js",
