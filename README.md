@@ -63,15 +63,13 @@ npx dsh-canvas-preview
 
 然后打开 http://127.0.0.1:3080/ ，会话顶栏出现「画板」即可。
 
-等价官方装包命令：
+等价官方装包命令（包内已声明 `dsh.bundle`，会套用 `cordis.patch.yml` 启用画板）：
 
 ```bash
 dsh plugin --profile web add dsh-canvas-preview
 ```
 
-（`npx` 安装器会再帮你写入 `cordis.patch.yml` 并尝试重启。）
-
-> 为什么不能在 Harness 里点一下就装？当前 DSH **没有社区一键商店**：设置里的插件清单是只读的，`dsh plugin add` 也只等于在 profile 里 `pnpm add`，还不会帮你启用。多出来的步骤是平台限制，不是本插件额外要求。这条 `npx` 把「装包 + 启用」包在一起了。
+（`npx` 安装器同样会写入 profile 并尝试重启。）
 
 本地开发（`file:` 链接，改源码即生效）：
 

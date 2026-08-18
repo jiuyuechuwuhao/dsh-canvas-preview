@@ -1,0 +1,4 @@
+# Bundle 层：dsh plugin add 会按 package.json → dsh.bundle.patch 套用本文件。
+- insert:
+    - id: canvas-preview
+      name: dsh-canvas-preview

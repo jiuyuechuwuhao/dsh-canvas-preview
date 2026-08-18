@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.6 — 2026-08-18
+
+- 补齐 `dsh.bundle` + 根目录 `cordis.patch.yml`，使 `dsh plugin add` 可安装
+- 发布包纳入 `cordis.patch.yml`
+
 ## 0.4.5 — 2026-08-17
 
 - 仓库页与 npm 文档对齐：访问范围、SECURITY.md、发现入口
